@@ -5,21 +5,36 @@ async function getGames(){
     try{
         const response = await fetch(gamesUrl);
         const results = await response.json();
-        const count = results.results;
-        console.log(count);
+        const details = results.results;
+        console.log(details);
 
         container.innerHTML = "";
 
-        for(let i = 0; i < count.length; i++){
+        for(let i = 0; i < details.length; i++){
             if(i === 8){
                 break;
             }
 
-        container.innerHTML += `
-        <div class="item" style="background-color: beige"><h2 style="color: green">${count[i].name}</h2>
-        <p>Rating: ${count[i].rating}</p>
-        <p>Number of tags: ${count[i].tags.length}</p></div>`;
+            let name = "Unknown name"
+            let tags = "Unknown"
+            let rating = "Unknown"
+
+            if(details[i].name){
+                name = details[i].name;
+            } 
+            if(details[i].rating){
+                rating = details[i].rating;
+            }  
+            if(details[i].tags.length){
+                tags = details[i].tags.length;
+            }  
+            
+            container.innerHTML += `
+            <div class="item" style="background-color: beige"><h2 style="color: green">${name}</h2>
+            <p>Rating: ${rating}</p>
+            <p>Number of tags: ${tags}</p></div>`;
         } 
+
     }
     catch(error) {
         console.log(error);
